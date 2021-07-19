@@ -1,14 +1,26 @@
 const Sequelize = require('sequelize');
 
 module.exports = function (app) {
-  const connectionString = app.get('postgres');
-  const sequelize = new Sequelize(connectionString, {
-    dialect: 'postgres',
-    logging: false,
-    define: {
-      freezeTableName: true
-    }
-  });
+  let sequelize;
+  const {host,port,username,password,database}=app.get('postgres');
+
+  if(process.env.DATABASE_URL){
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      logging: false,
+      protocol: 'postgres',
+    });
+  }else{
+    sequelize = new Sequelize(database,username,password, {
+      port,
+      host,
+      dialect: 'postgres',
+      logging: false,
+      define: {
+        freezeTableName: true
+      }
+    });
+  }
   const oldSetup = app.setup;
 
   app.set('sequelizeClient', sequelize);
