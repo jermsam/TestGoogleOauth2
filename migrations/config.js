@@ -6,7 +6,14 @@ const { database, username, password, host ,port} = app.get('postgres');
 
 const target = {
   dialect,
-  migrationStorageTableName: '_migrations'
+  migrationStorageTableName: '_migrations',
+  dialectOptions: {
+    ssl:{
+      sslStrict: false, // turning off sslStrict mode
+      rejectUnauthorized: false, // disabling its ability to reject Unauthorised connections
+    }
+
+  }
 };
 
 const source =  process.env.DATABASE_URL?{

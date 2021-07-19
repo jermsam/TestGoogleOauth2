@@ -9,7 +9,20 @@ module.exports = function (app) {
       dialect: 'postgres',
       logging: false,
       protocol: 'postgres',
+      define: {
+        freezeTableName: true
+      },
+      dialectOptions: {
+        ssl:{
+          sslStrict: false, // turning off sslStrict mode
+          rejectUnauthorized: false, // disabling its ability to reject Unauthorised connections
+        }
+
+      }
     });
+
+
+
   }else{
     sequelize = new Sequelize(database,username,password, {
       port,
