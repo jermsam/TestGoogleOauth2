@@ -1,4 +1,4 @@
 {
-  "host": "feathers-oauth-app.feathersjs.com",
+  "host": "test-for-oauth.herokuapp.com/",
   "port": "PORT"
 }
